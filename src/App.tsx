@@ -11,19 +11,56 @@ function App() {
     ["Serkan", "X", "0", "2", "0", "2", "0", "4", "0"],
   ];
 
+  // Günlük toplam oyun sayısını hesapla (dikey)
+  const calculateDailyTotalGames = () => {
+    const dailyTotals = [];
+
+    // Her gün için (sütun bazında)
+    for (let day = 1; day < data[0].length; day++) {
+      let dayTotal = 0;
+
+      // Her oyuncu için o günkü skoru kontrol et
+      for (let player = 0; player < data.length; player++) {
+        const score = data[player][day];
+        if (score !== "X" && score !== "0") {
+          dayTotal += parseInt(score);
+        }
+      }
+
+      dailyTotals.push(dayTotal);
+    }
+
+    return dailyTotals;
+  };
+
+  const dailyTotalGames = calculateDailyTotalGames();
+
   const calculateStats = (playerData: any) => {
     const name = playerData[0];
     const games = playerData.slice(1);
 
     const playedDays = games.filter((score: any) => score !== "X").length;
 
-    const totalLosses = games.reduce((sum: any, score: any) => {
-      if (score === "X" || score === "0") return sum;
-      return sum + parseInt(score);
-    }, 0);
+    // Toplam kayıp ve toplam oyun sayısını hesapla
+    let totalLosses = 0;
+    let totalGames = 0;
 
-    const totalGames = playedDays * 4;
+    games.forEach((score: any, dayIndex: number) => {
+      if (score !== "X") {
+        // Oyuncu geldiyse, o günkü toplam oyun sayısını ekle
+        totalGames += dailyTotalGames[dayIndex];
+
+        if (score !== "0") {
+          totalLosses += parseInt(score);
+        }
+      }
+    });
+
     const totalWins = totalGames - totalLosses;
+
+    // Kayıp yüzdesi
+    const lossPercentage =
+      totalGames > 0 ? ((totalLosses / totalGames) * 100).toFixed(1) : "0.0";
 
     return {
       name,
@@ -31,22 +68,13 @@ function App() {
       totalGames,
       wins: totalWins,
       losses: totalLosses,
+      lossPercentage,
     };
   };
 
   const stats = data.map(calculateStats);
 
-  const totalAllLosses = stats.reduce((sum, player) => sum + player.losses, 0);
-
-  const statsWithPercentage = stats.map((player) => ({
-    ...player,
-    lossPercentage:
-      totalAllLosses > 0
-        ? ((player.losses / totalAllLosses) * 100).toFixed(1)
-        : 0,
-  }));
-
-  const sortedStats = [...statsWithPercentage].sort(
+  const sortedStats = [...stats].sort(
     (a, b) => Number(a.lossPercentage) - Number(b.lossPercentage)
   );
 
@@ -55,22 +83,24 @@ function App() {
       <h2>
         101 Track <FaDice size={34} />
       </h2>
+
       <table className="stats-table">
         <thead>
           <tr>
             <th>No</th>
             <th>Player</th>
             <th>Day</th>
+            <th>Games</th>
             <th>Loss</th>
-            <th>Total Loss %</th>
-            <th>Day 1</th>
-            <th>Day 2</th>
-            <th>Day 3</th>
-            <th>Day 4</th>
-            <th>Day 5</th>
-            <th>Day 6</th>
-            <th>Day 7</th>
-            <th>Day 8</th>
+            <th>Loss%</th>
+            <th>D1</th>
+            <th>D2</th>
+            <th>D3</th>
+            <th>D4</th>
+            <th>D5</th>
+            <th>D6</th>
+            <th>D7</th>
+            <th>D8</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +113,7 @@ function App() {
                   <strong>{stat.name}</strong>
                 </td>
                 <td>{stat.playedDays}</td>
+                <td>{stat.totalGames}</td>
                 <td className="loss">{stat.losses}</td>
                 <td className="percentage">
                   <strong>{stat.lossPercentage}%</strong>
