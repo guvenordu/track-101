@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaDice } from "react-icons/fa6";
 import "./App.css";
 
@@ -10,13 +11,13 @@ function App() {
     ["Serkan", "X", "0", "2", "0", "2", "0", "4", "0"],
   ];
 
-  const calculateStats = (playerData) => {
+  const calculateStats = (playerData: any) => {
     const name = playerData[0];
     const games = playerData.slice(1);
 
-    const playedDays = games.filter((score) => score !== "X").length;
+    const playedDays = games.filter((score: any) => score !== "X").length;
 
-    const totalLosses = games.reduce((sum, score) => {
+    const totalLosses = games.reduce((sum: any, score: any) => {
       if (score === "X" || score === "0") return sum;
       return sum + parseInt(score);
     }, 0);
@@ -46,7 +47,7 @@ function App() {
   }));
 
   const sortedStats = [...statsWithPercentage].sort(
-    (a, b) => a.lossPercentage - b.lossPercentage
+    (a, b) => Number(a.lossPercentage) - Number(b.lossPercentage)
   );
 
   return (
