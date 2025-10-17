@@ -66,3 +66,126 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.stats-container {
+  padding: 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, sans-serif;
+}
+
+.stats-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+  color: #1e293b;
+}
+
+.stats-scroll {
+  overflow-x: auto;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.stats-table th {
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-bottom: 2px solid #e2e8f0;
+  text-align: center;
+}
+
+.stats-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: center;
+  color: #334155;
+}
+
+.stats-table tr:hover {
+  background-color: #f8fafc;
+  transition: background-color 0.2s ease;
+}
+
+.player-name {
+  font-weight: 600;
+  text-align: left;
+  padding-left: 16px;
+  color: #1e293b;
+}
+
+/* --- Renk Kodları --- */
+.percent.good {
+  color: #16a34a; /* yeşil */
+  font-weight: 600;
+}
+
+.percent.medium {
+  color: #ca8a04; /* sarı */
+  font-weight: 600;
+}
+
+.percent.neutral {
+  color: #64748b; /* gri */
+}
+
+.percent.warn {
+  color: #f97316; /* turuncu */
+  font-weight: 600;
+}
+
+.percent.bad {
+  color: #dc2626; /* kırmızı */
+  font-weight: 600;
+}
+
+/* --- Tablo Köşeleri ve Gölge --- */
+.stats-table th:first-child {
+  border-top-left-radius: 8px;
+}
+.stats-table th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.win {
+  color: green;
+  font-weight: bold;
+}
+
+.loss {
+  color: red;
+  font-weight: bold;
+}
+
+.legend-win {
+  color: green;
+  font-weight: bold;
+}
+
+.legend-loss {
+  color: red;
+  font-weight: bold;
+}
+
+/* Mevcut stilleriniz */
+.absent {
+  background-color: #ffcccc;
+}
+
+.no-loss {
+  background-color: #ccffcc;
+}
+
+.played {
+  background-color: #ffffcc;
+}

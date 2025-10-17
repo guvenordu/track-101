@@ -1,39 +1,112 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { FaDice } from "react-icons/fa6";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const data = [
+    ["Uğur", "4", "0", "4", "0", "X", "0", "X", "X"],
+    ["Cemil", "1", "2", "0", "3", "0", "2", "0", "1"],
+    ["Güven", "1", "4", "1", "4", "1", "5", "3", "1"],
+    ["Kamil", "1", "1", "X", "1", "4", "X", "0", "4"],
+    ["Serkan", "X", "0", "2", "0", "2", "0", "4", "0"],
+  ];
+
+  const calculateStats = (playerData) => {
+    const name = playerData[0];
+    const games = playerData.slice(1);
+
+    const playedDays = games.filter((score) => score !== "X").length;
+
+    const totalLosses = games.reduce((sum, score) => {
+      if (score === "X" || score === "0") return sum;
+      return sum + parseInt(score);
+    }, 0);
+
+    const totalGames = playedDays * 4;
+    const totalWins = totalGames - totalLosses;
+
+    return {
+      name,
+      playedDays,
+      totalGames,
+      wins: totalWins,
+      losses: totalLosses,
+    };
+  };
+
+  const stats = data.map(calculateStats);
+
+  const totalAllLosses = stats.reduce((sum, player) => sum + player.losses, 0);
+
+  const statsWithPercentage = stats.map((player) => ({
+    ...player,
+    lossPercentage:
+      totalAllLosses > 0
+        ? ((player.losses / totalAllLosses) * 100).toFixed(1)
+        : 0,
+  }));
+
+  const sortedStats = [...statsWithPercentage].sort(
+    (a, b) => a.lossPercentage - b.lossPercentage
+  );
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>101Track</h1>
+    <div className="table-container">
       <h2>
-        Teknolojiye ayak uyduruyoruz, Serkan'ın not defterine son.
-        <br />
-        Yakında gerçek datalarla karışınızdayız...
+        101 Track <FaDice size={34} />
       </h2>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <table className="stats-table">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Player</th>
+            <th>Day</th>
+            <th>Loss</th>
+            <th>Total Loss %</th>
+            <th>Day 1</th>
+            <th>Day 2</th>
+            <th>Day 3</th>
+            <th>Day 4</th>
+            <th>Day 5</th>
+            <th>Day 6</th>
+            <th>Day 7</th>
+            <th>Day 8</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedStats.map((stat, index) => {
+            const playerOriginalData = data.find((d) => d[0] === stat.name);
+            return (
+              <tr key={stat.name}>
+                <td>{index + 1}</td>
+                <td>
+                  <strong>{stat.name}</strong>
+                </td>
+                <td>{stat.playedDays}</td>
+                <td className="loss">{stat.losses}</td>
+                <td className="percentage">
+                  <strong>{stat.lossPercentage}%</strong>
+                </td>
+                {playerOriginalData &&
+                  playerOriginalData.slice(1).map((score, dayIndex) => (
+                    <td
+                      key={dayIndex}
+                      className={
+                        score === "X"
+                          ? "absent"
+                          : score === "0"
+                          ? "no-loss"
+                          : "played"
+                      }
+                    >
+                      {score}
+                    </td>
+                  ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
