@@ -106,6 +106,7 @@ function App() {
             <th>D11</th>
             <th>D12</th>
             <th>D13</th>
+            <th>D14</th>
           </tr>
         </thead>
         <tbody>
