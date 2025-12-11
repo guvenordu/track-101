@@ -84,7 +84,7 @@ function App() {
         101 Track <FaDice size={34} />
       </h2>
 
-      <table className="stats-table">
+     /* <table className="stats-table">
         <thead>
           <tr>
             <th>No</th>
@@ -143,7 +143,7 @@ function App() {
             );
           })}
         </tbody>
-      </table>
+      </table> */
     </div>
   );
 }
