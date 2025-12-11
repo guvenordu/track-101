@@ -84,66 +84,7 @@ function App() {
         101 Track <FaDice size={34} />
       </h2>
 
-     /* <table className="stats-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Player</th>
-            <th>Day</th>
-            <th>Games</th>
-            <th>Loss</th>
-            <th>Loss%</th>
-            <th>D1</th>
-            <th>D2</th>
-            <th>D3</th>
-            <th>D4</th>
-            <th>D5</th>
-            <th>D6</th>
-            <th>D7</th>
-            <th>D8</th>
-            <th>D9</th>
-            <th>D10</th>
-            <th>D11</th>
-            <th>D12</th>
-            <th>D13</th>
-            <th>D14</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedStats.map((stat, index) => {
-            const playerOriginalData = data.find((d) => d[0] === stat.name);
-            return (
-              <tr key={stat.name}>
-                <td>{index + 1}</td>
-                <td>
-                  <strong>{stat.name}</strong>
-                </td>
-                <td>{stat.playedDays}</td>
-                <td>{stat.totalGames}</td>
-                <td className="loss">{stat.losses}</td>
-                <td className="percentage">
-                  <strong>{stat.lossPercentage}%</strong>
-                </td>
-                {playerOriginalData &&
-                  playerOriginalData.slice(1).map((score, dayIndex) => (
-                    <td
-                      key={dayIndex}
-                      className={
-                        score === "X"
-                          ? "absent"
-                          : score === "0"
-                          ? "no-loss"
-                          : "played"
-                      }
-                    >
-                      {score}
-                    </td>
-                  ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table> */
+   
     </div>
   );
 }
